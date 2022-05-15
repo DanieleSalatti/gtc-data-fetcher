@@ -11,42 +11,28 @@ def run_query(q):
     else:
         raise Exception('Query failed. return code is {}.      {}'.format(request.status_code, query))
 
-queryVotes = """
-query getVotes {
-  votes(orderBy: id, orderDirection: asc, first: 100) {
+queryGrants = """
+query getGrants {
+  grants(orderBy: id, orderDirection: asc, first: 100) {
     id
-    voteId
-    voter {
+    votes {
       id
+      amount
+      createdAt
     }
-    amount
-    grantId
-    createdAt
+    releases {
+      id
+      amount
+      createdAt
+    }
   }
 }
 """
 
-votesResult = run_query(queryVotes)
+grantsResult = run_query(queryGrants)
 
-queryReleases = """
-query getReleases {
-  releases(orderBy: id orderDirection: asc first: 100) {
-    id
-    voter {
-      id
-    }
-    voteId
-    amount
-    createdAt
-  }
-}
-"""
+## TODO: calculation of voting power per grant
 
-releasesResult = run_query(queryReleases)
-
-print('Vote Results')
+print('Grant Results')
 print('#############')
-pprint(votesResult)
-print('Releases Results')
-print('#############')
-pprint(releasesResult)
+pprint(grantsResult)
