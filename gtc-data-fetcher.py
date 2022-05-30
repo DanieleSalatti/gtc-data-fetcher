@@ -41,8 +41,6 @@ query getGrants {
 
 grantsResult = run_query(queryGrants)
 
-## TODO: calculation of voting power per grant
-
 print('Grant Results')
 print('#############')
 
