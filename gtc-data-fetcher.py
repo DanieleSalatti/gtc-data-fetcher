@@ -93,6 +93,6 @@ def calculate_voting_power(grant):
 
 
 for grant in grants:
-    print('Grant: {}'.format(grant['id']))
+    print('Grant: {}'.format(int(grant['id'], 16)))
     print('Voting Power: {}'.format(calculate_voting_power(grant)))
 
