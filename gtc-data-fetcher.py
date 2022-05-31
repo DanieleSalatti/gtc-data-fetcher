@@ -10,15 +10,15 @@ from web3 import Web3
 # export const GRAPH_URI_MAINNET = "https://api.studio.thegraph.com/query/20308/gtc-conviction-voting-mainnet/v0.0.2";
 
 
-def run_query(q):
-    request = requests.post('https://api.studio.thegraph.com/query/20308/gtc-conviction-voting-mainnet/v0.0.2'
+def run_query(q, endpoint):
+    request = requests.post( endpoint,
     # request = requests.post('https://api.thegraph.com/subgraphs/name/danielesalatti/gtc-conviction-voting-rinkeby'
                             '',
                             json={'query': q})
     if request.status_code == 200:
         return request.json()
     else:
-        raise Exception('Query failed. return code is {}.      {}'.format(request.status_code, query))
+        raise Exception('Query failed. return code is {}. {}'.format(request.status_code, q))
 
 queryGrants = """
 query getGrants {
@@ -39,12 +39,14 @@ query getGrants {
 }
 """
 
-grantsResult = run_query(queryGrants)
+grantsResult = run_query(queryGrants, 'https://api.studio.thegraph.com/query/20308/gtc-conviction-voting-mainnet/v0.0.2')
+grantsResultOptimism = run_query(queryGrants, 'https://api.thegraph.com/subgraphs/name/danielesalatti/gtc-conviction-voting-rinkeby')
 
 print('Grant Results')
 print('#############')
 
 grants = grantsResult['data']['grants']
+grantsOptimism = grantsResult['data']['grants']
 
 maxMultiplier = 50
 
@@ -91,6 +93,10 @@ def calculate_voting_power(grant):
 
 
 for grant in grants:
+    print('Grant: {}'.format(int(grant['id'], 16)))
+    print('Voting Power: {}'.format(calculate_voting_power(grant)))
+
+for grant in grantsOptimism:
     print('Grant: {}'.format(int(grant['id'], 16)))
     print('Voting Power: {}'.format(calculate_voting_power(grant)))
 
