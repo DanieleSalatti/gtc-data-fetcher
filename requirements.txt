@@ -25,7 +25,7 @@ multiaddr==0.0.9
 multidict==6.0.2
 netaddr==0.8.0
 parsimonious==0.8.1
-protobuf==3.20.1
+protobuf==3.20.2
 pycryptodome==3.14.1
 pyrsistent==0.18.1
 requests==2.27.1
